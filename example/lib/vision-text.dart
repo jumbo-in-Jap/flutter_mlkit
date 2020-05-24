@@ -23,6 +23,8 @@ class _VisionTextWidgetState extends State<VisionTextWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var sample = "hello\naaa".replaceAll("\n", "\\n");
+    print(sample);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -160,19 +162,20 @@ class _TextDetectPainter extends BoxPainter {
       ..strokeWidth = 2.0
       ..color = Colors.red
       ..style = PaintingStyle.stroke;
-    print("original Image Size : ${_originalImageSize}");
+    print("-----original Image Size : ${_originalImageSize}");
 
     final _heightRatio = _originalImageSize.height / configuration.size.height;
     final _widthRatio = _originalImageSize.width / configuration.size.width;
     for (var text in _texts) {
-      print("text : ${text.text}, rect : ${text.rect}");
+//      stdout.write("\"${text.text}\", \"${text.rect.center.dx}\", \"${text.rect.center.dy}\"");
+      print("[\"${text.text.replaceAll("\n", "\\n")}\", \"${text.rect.center.dx}\", \"${text.rect.center.dy}\", \"${text.rect.left}\", \"${text.rect.top}\", \"${text.rect.right}\", \"${text.rect.bottom}\"],");
       final _rect = Rect.fromLTRB(
           offset.dx + text.rect.left / _widthRatio,
           offset.dy + text.rect.top / _heightRatio,
           offset.dx + text.rect.right / _widthRatio,
           offset.dy + text.rect.bottom / _heightRatio);
       //final _rect = Rect.fromLTRB(24.0, 115.0, 75.0, 131.2);
-      print("_rect : ${_rect}");
+//      print("_rect : ${_rect}");
       canvas.drawRect(_rect, paint);
     }
 
